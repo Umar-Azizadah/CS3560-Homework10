@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Iterator;
 
-public class User {
+public class User implements IterableByUser {
 
     private final String username;
     private final ChatServer server;
@@ -94,7 +95,6 @@ public class User {
         return false;
     }
 
-
     void removeReceivedMessage(Message message) {
         receivedMessages.remove(message);
         chatHistory.removeMessage(message);
@@ -103,5 +103,11 @@ public class User {
     void removeSentMessage(Message message) {
         chatHistory.removeMessage(message);
     }
+
+    @Override
+    public Iterator<Message> iterator(User userToSearchWith) {
+        return chatHistory.iterator(userToSearchWith);
+    }
+
 
 }
