@@ -30,4 +30,8 @@ public class ChatHistory {
 
         return null;
     }
+
+    public void removeMessage(Message message) {
+        messages.remove(message);
+    }
 }

@@ -64,4 +64,24 @@ public class ChatServer {
     public List<User> getRegisteredUsers() {
         return List.copyOf(users);
     }
+
+    public boolean undoMessage(User sender, Message message) {
+        if (!users.contains(sender)
+                || message.getSender() != sender
+                || !sender.getChatHistory().contains(message)) {
+            return false;
+        }
+
+        for (User recipient : message.getRecipients()) {
+            if (recipient == sender) {
+                sender.removeReceivedMessage(message);
+            } else if (users.contains(recipient)) {
+                recipient.removeReceivedMessage(message);
+            }
+        }
+
+        sender.removeSentMessage(message);
+
+        return true;
+    }
 }
